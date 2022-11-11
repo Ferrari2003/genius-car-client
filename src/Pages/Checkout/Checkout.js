@@ -5,6 +5,7 @@ import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 const Checkout = () => {
     const { _id, title, price } = useLoaderData();
     const { user } = useContext(AuthContext);
+    console.log(user)
 
     const handlePlaceOrder = event => {
         event.preventDefault();
@@ -13,7 +14,7 @@ const Checkout = () => {
         const email = user?.email || 'unregistered';
         const phone = form.phone.value;
         const message = form.message.value;
-        console.log('hekloo')
+
 
         const order = {
             service: _id,
@@ -25,7 +26,7 @@ const Checkout = () => {
             message
         }
 
-        fetch(`http://localhost:5000/orders`, {
+        fetch(`https://genius-car-server-wheat.vercel.app/orders`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -33,9 +34,9 @@ const Checkout = () => {
             body: JSON.stringify(order)
         })
             .then(res => res.json())
-            .then(data => {              
+            .then(data => {
                 console.log(data)
-                if(data.acknowledged){
+                if (data.acknowledged) {
                     alert('Order Placed successfully')
                     form.reset();
                 }

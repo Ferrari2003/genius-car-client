@@ -4,7 +4,16 @@ import logo from '../../../assets/logo.svg'
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const Header = () => {
-    const {user} = useContext(AuthContext);
+    const {user,LogOut} = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        LogOut()
+        .then()
+        .catch();
+        console.log('logout')
+    }
+
+
     const menuItems = <>
        <li><Link to={'/'}>Home</Link></li>
        {
@@ -16,6 +25,9 @@ const Header = () => {
         <li><Link to={'/login'}>Login</Link></li>
         }
        <li><Link to={'/signUp'}>Sign Up</Link></li>
+       <li>
+            <button onClick={handleLogOut} className='btn-ghost'>Log Out </button>
+        </li>
     </>
 
     return (

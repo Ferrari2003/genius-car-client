@@ -4,9 +4,10 @@ import logo from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { FaGoogle } from "react-icons/fa";
 import { GoogleAuthProvider } from 'firebase/auth';
+import { setAuthToken } from '../../api/Auth';
 
 const SignUp = () => {
-    const { createUser,providerLogin } = useContext(AuthContext)
+    const { signUp,providerLogin } = useContext(AuthContext)
 
     const handleSubmitSignUp = (event) => {
         event.preventDefault()
@@ -17,7 +18,7 @@ const SignUp = () => {
         console.log(name, email, password)
         event.target.reset();
 
-        createUser(email, password)
+        signUp(email, password)
             .then(result => {
                 const user = result.user;
                 console.log(user)
@@ -32,6 +33,8 @@ const SignUp = () => {
         .then(result => {
             const user = result.user
             console.log(user)
+           setAuthToken(user);
+
         })
         .catch(error => console.error(error))
     }
@@ -61,7 +64,7 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="text" name='password' placeholder="password" className="input input-bordered" required />
+                            <input type="password"  name='password' placeholder="password" className="input input-bordered" required />
                         </div>
                         <div className="form-control mt-6">
                             <input className="btn btn-primary" type="submit" value="Sign Up" />
